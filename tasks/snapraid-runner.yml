@@ -5,13 +5,20 @@
     repo: https://github.com/Chronial/snapraid-runner.git
     dest: /opt/snapraid-runner
 
+- name: change the mode of snapraid-runner.py
+  become: true
+  file:
+    path: /opt/snapraid-runner/snapraid-runner.py
+    mode: 0644
+
 - name: install snapraid-runner configuration file
+  become: true
   template:
     src: snapraid-runner.conf.j2
     dest: "{{ snapraid_runner_conf }}"
     owner: root
     group: root
-    mode: 0775
+    mode: 0644
 
 - name: setup cron job snapraid-runner
   cron:
